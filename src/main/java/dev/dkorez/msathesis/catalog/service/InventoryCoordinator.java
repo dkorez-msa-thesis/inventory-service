@@ -22,32 +22,27 @@ public class InventoryCoordinator {
     public void reserveQuantity(ReservationRequest request) {
         inventoryService.reserveQuantity(request);
 
-        InventoryEvent event = new InventoryEvent();
-        event.setType(InventoryEventType.INVENTORY_RESERVED);
-        event.setProductId(request.getProductId());
-        event.setQuantity(request.getQuantity());
-        event.setOrderId(request.getOrderId());
+        InventoryEvent event = new InventoryEvent(InventoryEventType.INVENTORY_RESERVED, request.getProductId(), request.getQuantity(), request.getOrderId());
         eventProducer.sendEvent(event);
     }
 
     public void cancelReservation(ReservationRequest request) {
         inventoryService.cancelReservation(request);
 
-        InventoryEvent event = new InventoryEvent();
-        event.setType(InventoryEventType.INVENTORY_RELEASED);
-        event.setProductId(request.getProductId());
-        event.setQuantity(request.getQuantity());
-        event.setOrderId(request.getOrderId());
+        InventoryEvent event = new InventoryEvent(InventoryEventType.RESERVATION_RELEASED, request.getProductId(), request.getQuantity(), request.getOrderId());
         eventProducer.sendEvent(event);
     }
 
-    public void updateQuantity(InventoryRequest request) {
+    public void updateQuantity(InventoryRequest request, boolean sendEvent) {
         inventoryService.updateQuantity(request);
 
-        InventoryEvent event = new InventoryEvent();
-        event.setType(InventoryEventType.INVENTORY_UPDATED);
-        event.setProductId(request.getProductId());
-        event.setQuantity(request.getQuantity());
-        eventProducer.sendEvent(event);
+        if (sendEvent) {
+            InventoryEvent event = new InventoryEvent(InventoryEventType.INVENTORY_UPDATED, request.getProductId(), request.getQuantity(), null);
+            eventProducer.sendEvent(event);
+        }
+    }
+
+    public void deleteInventory(Long productId) {
+        inventoryService.deleteInventory(productId);
     }
 }

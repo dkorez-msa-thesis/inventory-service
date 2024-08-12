@@ -73,6 +73,11 @@ public class InventoryService {
             inventory.setReservedQuantity(0);
             inventoryRepository.save(inventory);
         } else {
+            // don't update if the request quantity is the same
+            if (inventory.getQuantity().equals(request.getQuantity())) {
+                return;
+            }
+
             inventory.setQuantity(request.getQuantity());
             inventoryRepository.update(inventory);
         }
@@ -83,5 +88,10 @@ public class InventoryService {
         transaction.setType(TransactionType.UPDATE);
 
         inventoryRepository.addTransaction(request.getProductId(), transaction);
+    }
+
+    @Transactional
+    public void deleteInventory(Long productId) {
+        inventoryRepository.delete(productId);
     }
 }

@@ -38,6 +38,10 @@ public class InventoryRepository {
         );
     }
 
+    public void delete(Long productId) {
+        getCollection().deleteMany(eq("product_id", productId));
+    }
+
     private MongoCollection<InventoryDocument> getCollection() {
         return mongoClient.getDatabase("inventory_db").getCollection("inventory", InventoryDocument.class);
     }
