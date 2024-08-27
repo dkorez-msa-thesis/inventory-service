@@ -41,11 +41,11 @@ public class OrderEventConsumer {
             switch (orderEvent.getType()) {
                 case CREATED -> {
                     List<ReservationRequest> reservations = convertToReservations(order);
-                    reservations.forEach(inventoryCoordinator::reserveQuantity);
+                    reservations.forEach(i -> inventoryCoordinator.reserveQuantity(i, true));
                 }
                 case CANCELLED -> {
                     List<ReservationRequest> reservations = convertToReservations(order);
-                    reservations.forEach(inventoryCoordinator::cancelReservation);
+                    reservations.forEach(i -> inventoryCoordinator.cancelReservation(i, true));
                 }
                 case UPDATED -> {
                     List<InventoryRequest> inventories = convertToInventoryRequest(order);

@@ -19,18 +19,22 @@ public class InventoryCoordinator {
         this.eventProducer = eventProducer;
     }
 
-    public void reserveQuantity(ReservationRequest request) {
+    public void reserveQuantity(ReservationRequest request, boolean sendEvent) {
         inventoryService.reserveQuantity(request);
 
-        InventoryEvent event = new InventoryEvent(InventoryEventType.INVENTORY_RESERVED, request.getProductId(), request.getQuantity(), request.getOrderId());
-        eventProducer.sendEvent(event);
+        if (sendEvent) {
+            InventoryEvent event = new InventoryEvent(InventoryEventType.INVENTORY_RESERVED, request.getProductId(), request.getQuantity(), request.getOrderId());
+            eventProducer.sendEvent(event);
+        }
     }
 
-    public void cancelReservation(ReservationRequest request) {
+    public void cancelReservation(ReservationRequest request, boolean sendEvent) {
         inventoryService.cancelReservation(request);
 
-        InventoryEvent event = new InventoryEvent(InventoryEventType.RESERVATION_RELEASED, request.getProductId(), request.getQuantity(), request.getOrderId());
-        eventProducer.sendEvent(event);
+        if (sendEvent) {
+            InventoryEvent event = new InventoryEvent(InventoryEventType.RESERVATION_RELEASED, request.getProductId(), request.getQuantity(), request.getOrderId());
+            eventProducer.sendEvent(event);
+        }
     }
 
     public void updateQuantity(InventoryRequest request, boolean sendEvent) {

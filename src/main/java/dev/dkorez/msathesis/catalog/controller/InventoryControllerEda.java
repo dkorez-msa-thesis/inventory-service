@@ -10,15 +10,15 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @ApplicationScoped
-@Path("api/inventory")
+@Path("eda/inventory")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class InventoryControllerRest {
+public class InventoryControllerEda {
     private final InventoryCoordinator inventoryCoordinator;
-    private final static boolean SEND_EVENT = false;
+    private final static boolean SEND_EVENT = true;
 
     @Inject
-    public InventoryControllerRest(InventoryCoordinator inventoryCoordinator) {
+    public InventoryControllerEda(InventoryCoordinator inventoryCoordinator) {
         this.inventoryCoordinator = inventoryCoordinator;
     }
 
