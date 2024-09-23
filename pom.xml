@@ -16,7 +16,7 @@
         <compiler-plugin.version>3.13.0</compiler-plugin.version>
 
         <lombok.version>1.18.34</lombok.version>
-        <catalog-common-lib.version>1.1.5</catalog-common-lib.version>
+        <catalog-common-lib.version>1.1.6</catalog-common-lib.version>
     </properties>
 
     <dependencyManagement>
