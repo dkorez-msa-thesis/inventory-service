@@ -38,7 +38,7 @@ public class InventoryControllerRest {
 
     @PATCH
     @Path("update")
-    public Response cancelReservation(InventoryRequest inventory) {
+    public Response updateQuantity(InventoryRequest inventory) {
         inventoryCoordinator.updateQuantity(inventory, SEND_EVENT);
         return Response.ok().build();
     }
